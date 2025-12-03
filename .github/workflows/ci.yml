@@ -25,18 +25,18 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: configurer docker
-      - uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v3
 
       - name: docker compose up
-      - run: |
+        run: |
           docker compose up -d
 
       - name: verifier conteneurs
-      - run: |
+        run: |
           docker compose ps -a
 
       - name: trivy installation
-      - uses: aquasecurity/trivy-action@0.33.1
+        uses: aquasecurity/trivy-action@0.33.1
         with:
           scan-type: 'image'
           format: table
