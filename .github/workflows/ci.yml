@@ -41,4 +41,34 @@ jobs:
           scan-type: 'image'
           # format: table
           output: "rapport.txt"
+          skip-files: .
+          skip-dirs: .
+
+      - name: Trivy scan all infra images (HIGH,CRITICAL)
+        run: |
+          IMAGES=(
+            "prom/prometheus:v2.55.0"
+            "grafana/grafana:11.1.0"
+            "prom/node-exporter:v1.8.2"
+            "wordpress:latest"
+            "mariadb:11.4"
+          )
+
+          mkdir -p trivy-reports
+
+          for img in "${IMAGES[@]}"; do
+            echo "=== Scanning $img ==="
+            docker pull "$img"
+            trivy image --severity HIGH,CRITICAL --exit-code 1 \
+              --format table \
+              --output "trivy-reports/$(echo "$img" | tr '/' '_' | tr ':' '_').txt" \
+              "$img"
+          done
+
+      # 5) Upload des rapports Trivy en artifacts
+      - name: Upload Trivy reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: trivy-reports
+          path: trivy-reports
           
