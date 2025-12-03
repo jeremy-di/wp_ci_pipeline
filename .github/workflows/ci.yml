@@ -33,7 +33,7 @@ jobs:
 
       - name: verifier conteneurs
         run: |
-          docker compose ps -a
+          docker ps -a
 
       - name: trivy installation
         uses: aquasecurity/trivy-action@0.33.1
