@@ -39,6 +39,6 @@ jobs:
         uses: aquasecurity/trivy-action@0.33.1
         with:
           scan-type: 'image'
-          format: table
+          # format: table
           output: "rapport.txt"
           
