@@ -39,7 +39,8 @@ jobs:
         uses: aquasecurity/trivy-action@0.33.1
         with:
           scan-type: 'image'
-          # format: table
+          image-ref: 'alpine:3.18'
+          format: table
           output: "rapport.txt"
           skip-files: .
           skip-dirs: .
@@ -69,6 +70,7 @@ jobs:
       - name: Upload Trivy reports
         uses: actions/upload-artifact@v4
         with:
+          
           name: trivy-reports
           path: trivy-reports
           
